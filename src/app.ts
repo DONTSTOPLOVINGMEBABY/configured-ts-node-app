@@ -1,11 +1,19 @@
 import Express from 'express';
+import create1000Users from './use-this'
 const app = Express();
-const PORT = process.env.PORT || 3000;
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.send('You have arrived at the node server');
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
-});
+app.get('/try-this', async (req, res) => {
+  try {
+    await create1000Users()
+    res.sendStatus(200)
+  } catch (error) {
+    res.sendStatus(500)
+    console.error(error)
+  }
+})
+
+export default app
